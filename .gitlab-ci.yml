@@ -1,0 +1,29 @@
+stages:
+  - AdventOfCode
+
+.ruby: &ruby_template
+  image: ruby:3.0
+  script:
+    - file=$(echo $CI_JOB_NAME | grep -o "[0-9][0-9]")
+    - ruby days/$file.rb
+  stage: AdventOfCode
+
+.python: &python_template
+  image: python:3.10
+  script:
+    - file=$(echo $CI_JOB_NAME | grep -o "[0-9][0-9]")
+    - python days/$file.py
+  stage: AdventOfCode
+
+day_07:
+  <<: *ruby_template
+
+day_06:
+  <<: *python_template
+day_01:
+  <<: *python_template
+
+day_08:
+  <<: *python_template
+day_09:
+  <<: *python_template
