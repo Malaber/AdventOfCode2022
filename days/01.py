@@ -20,5 +20,8 @@ for line in lines:
         elves[elve_counter] += calories
     else:
         elves[elve_counter] = calories
-
+print("Part 1:")
 print(max(elves.values()))
+print()
+print("Part 2:")
+print(sum(sorted(elves.values())[-3:]))
