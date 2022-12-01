@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up Ruby 3.0
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 3.1
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 3.0.x
+        ruby-version: 3.1
     - name: Run Advent of Code
       run: for f in $PWD/days/*.rb; do ruby $f && printf "\n\n\n\n\n"; done
