@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "adventofcode2021"
+name = "adventofcode2022"
 version = "0.1.0"
 description = ""
 authors = ["Malaber <git@schaedler.rocks>"]
