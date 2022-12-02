@@ -15,15 +15,7 @@ stages:
     - python days/$file.py
   stage: AdventOfCode
 
-day_07:
-  <<: *ruby_template
-
-day_06:
-  <<: *python_template
 day_01:
   <<: *python_template
-
-day_08:
-  <<: *python_template
-day_09:
+day_02:
   <<: *python_template
