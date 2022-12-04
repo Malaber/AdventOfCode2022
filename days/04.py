@@ -12,20 +12,21 @@ def get_bounds(range):
     return [int(i) for i in range.split("-")]
 
 
-counter = 0
+fully_contained_counter = 0
+overlap_at_all_counter = len(lines)
 for line in lines:
     first, second = line.strip().split(",")
     first_low, first_high = get_bounds(first)
     second_low, second_high = get_bounds(second)
 
-    fully_contained = False
-    if second_low >= first_low and second_high <= first_high:
-        fully_contained = True
-    elif first_low >= second_low and first_high <= second_high:
-        fully_contained = True
+    if second_low >= first_low and second_high <= first_high or first_low >= second_low and first_high <= second_high:
+        fully_contained_counter += 1
 
-    if fully_contained:
-        counter += 1
+    if first_low <= second_low and first_high < second_low or second_low <= first_low and second_high < first_low:
+        overlap_at_all_counter -= 1
 
-print("Part 1")
-print(counter)
+print("Part 1:")
+print(fully_contained_counter)
+print()
+print("Part 2:")
+print(overlap_at_all_counter)
