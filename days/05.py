@@ -59,4 +59,6 @@ for line in lines:
                 else:
                     stacks[i + 1].insert(0, (cell[1]))
 
-pass
+answer = "".join([stack.pop() for stack in stacks.values()])
+print("Part 1:")
+print(answer)
