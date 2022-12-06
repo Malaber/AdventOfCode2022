@@ -26,3 +26,5 @@ day_04:
   <<: *python_template
 day_05:
   <<: *python_template
+day_06:
+  <<: *python_template
