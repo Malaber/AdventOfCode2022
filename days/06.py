@@ -12,7 +12,7 @@ window = []
 
 for index, char in enumerate(chars):
     window.append(char)
-    if len(window) > 4:
+    if len(window) > 14:
         window.pop(0)
 
     if index < 3:
