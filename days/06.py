@@ -7,17 +7,25 @@ from helpers.input import Input
 
 lines = Input.get_lines(os.path.basename(__file__))
 
-chars = list(lines[0].strip())
-window = []
+datastream = list(lines[0].strip())
 
-for index, char in enumerate(chars):
-    window.append(char)
-    if len(window) > 14:
-        window.pop(0)
 
-    if index < 3:
-        continue
+def find_starting_index(chars, consecutive_changing_chars):
+    window = []
+    for index, char in enumerate(chars):
+        window.append(char)
+        if len(window) > consecutive_changing_chars:
+            window.pop(0)
 
-    if len(window) == len(list(set(window))):
-        print(index + 1)
-        break
+        if not index > consecutive_changing_chars:
+            continue
+
+        if len(window) == len(set(window)):
+            return index + 1
+
+
+print("Part 1:")
+print(find_starting_index(datastream, 4))
+print()
+print("Part 2:")
+print(find_starting_index(datastream, 14))
