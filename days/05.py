@@ -21,12 +21,12 @@ def combine_4_spaces_into_single_column(words):
     Combines 4 empty strings in list into one.
 
     If given the following input:
-    L1'    [Q] [F] [W] [S] [V] [N] [F] [N]'
-    L2' 1   2   3   4   5   6   7   8   9 '
+    L1'    [Q] [F]'
+    L2' 1   2   3 '
 
     this results in the following words for L1:
-    ["", "", "", "", "[Q]", "[F]", "[W]", "[S]", "[V]", "[N]", "[F]", "[N]"]
-    Therefore we have to combine the first 4 empty strings into a single one
+    ["", "", "", "", "[Q]", "[F]"]
+    Therefore we have to combine the first 4 empty strings into a single one.
 
     :param words: List of words resulting from the current line
     :return: List of words with every 4 spaces combined into one
@@ -42,10 +42,11 @@ def combine_4_spaces_into_single_column(words):
     return columns
 
 
-first_line_words = lines[0]
-stacks_needed = len(combine_4_spaces_into_single_column(first_line_words))
+stacks_needed = len(combine_4_spaces_into_single_column(lines[0]))
 # prepare as many empty stacks as we need
+# stacks for the crane 9000
 stacks = {}
+# stacks for the crane 9001
 stacks_2 = {}
 for i in range(1, stacks_needed + 1):
     stacks[i] = []
@@ -53,6 +54,7 @@ for i in range(1, stacks_needed + 1):
 
 
 def handle_move(words, stacks):
+    # handle move for crane 9000
     amount = int(words[1])
     fromm = int(words[3])  # naming a variable "from" causes trouble lol
     to = int(words[5])
@@ -67,6 +69,7 @@ def handle_move(words, stacks):
 
 
 def handle_move_2(words, stacks):
+    # handle move for crane 9001
     amount = int(words[1])
     fromm = int(words[3])  # naming a variable "from" causes trouble lol
     to = int(words[5])
