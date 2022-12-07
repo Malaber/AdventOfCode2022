@@ -10,7 +10,8 @@ lines_input = Input.get_lines(os.path.basename(__file__))
 lines = []
 # line preprocessing
 for line in lines_input:
-    if not line == "\n":
+    # filter out unnecessary lines
+    if not line == "\n" or line.startswith(" 1"):
         # remove newlines at end of the last words
         words = [word.strip() for word in line.split(" ")]
         lines.append(words)
@@ -88,21 +89,21 @@ def handle_move_2(words, stacks):
 
 # iterate over each line
 for words in lines:
-    match words[0]:
-        case "1":
-            continue
-        case "move":
-            # handle moves
-            stacks = handle_move(words, stacks)
-            stacks_2 = handle_move_2(words, stacks_2)
-        case _:
-            columns = combine_4_spaces_into_single_column(words)
-            for i, cell in enumerate(columns):
-                if cell == "":
-                    continue
-                else:
-                    stacks[i + 1].insert(0, (cell[1]))
-                    stacks_2[i + 1].insert(0, (cell[1]))
+    if words[0] == "move":
+        # handle moves
+        stacks = handle_move(words, stacks)
+        stacks_2 = handle_move_2(words, stacks_2)
+    else:
+        # build up stacks from top to bottom
+        columns = combine_4_spaces_into_single_column(words)
+        for i, cell in enumerate(columns):
+            if cell == "":
+                # ignore empty cells
+                continue
+            else:
+                # push current container at bottom of stack
+                stacks[i + 1].insert(0, (cell[1]))
+                stacks_2[i + 1].insert(0, (cell[1]))
 
 answer = "".join([stack.pop() for stack in stacks.values()])
 answer_2 = "".join([stack.pop() for stack in stacks_2.values()])
