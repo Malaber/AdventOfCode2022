@@ -30,21 +30,35 @@ for i in range(1, 10):
     stacks_2[i] = []
 
 
-def handle_move(words, stacks, stacks_2):
+def handle_move(words, stacks):
     amount = int(words[1])
     fromm = int(words[3])  # naming a variable "from" causes trouble lol
     to = int(words[5].strip())
 
-    buffer_2 = []
     for _i in range(0, amount):
-        stacks[to] += stacks[fromm].pop()
+        stack_to = stacks[to]
+        stack_from = stacks[fromm]
 
-        stack_from_2 = stacks_2[fromm]
-        buffer_2.insert(0, stack_from_2.pop())
+        stack_to += stack_from.pop()
 
-    stacks_2[to] += buffer_2
+    return stacks
 
-    return stacks, stacks_2
+
+def handle_move_2(words, stacks):
+    amount = int(words[1])
+    fromm = int(words[3])  # naming a variable "from" causes trouble lol
+    to = int(words[5].strip())
+
+    buffer = []
+    for _i in range(0, amount):
+        stack_from = stacks[fromm]
+
+        buffer += stack_from.pop()
+
+    buffer.reverse()
+    stacks[to] += buffer
+
+    return stacks_2
 
 
 for line in lines:
@@ -55,7 +69,8 @@ for line in lines:
             continue
         case "move":
             # handle moves
-            stacks, stacks_2 = handle_move(words, stacks, stacks_2)
+            stacks = handle_move(words, stacks)
+            stacks_2 = handle_move_2(words, stacks_2)
         case _:
             columns = combine_4_spaces_into_single_column(words)
             for i, cell in enumerate(columns):
