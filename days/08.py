@@ -48,12 +48,60 @@ def is_tree_visible(i, j, grid_max_i, grid_max_j, tree_grid, direction):
     return True
 
 
+def get_tree_viewing_distance(i, j, grid_max_i, grid_max_j, tree_grid, direction, height=None):
+    if height is None:
+        height = tree_grid[i][j]
+    match direction:
+        case "up":
+            if i == 0:
+                return 0
+
+            next_tree = tree_grid[i-1][j]
+            if next_tree >= height:
+                return 1
+            else:
+                return 1 + get_tree_viewing_distance(i-1, j, grid_max_i, grid_max_j, tree_grid, direction, height=height)
+
+        case "down":
+            if i == grid_max_i:
+                return 0
+
+            next_tree = tree_grid[i+1][j]
+            if next_tree >= height:
+                return 1
+            else:
+                return 1 + get_tree_viewing_distance(i+1, j, grid_max_i, grid_max_j, tree_grid, direction, height=height)
+
+        case "left":
+            if j == 0:
+                return 0
+
+            next_tree = tree_grid[i][j-1]
+            if next_tree >= height:
+                return 1
+            else:
+                return 1 + get_tree_viewing_distance(i, j-1, grid_max_i, grid_max_j, tree_grid, direction, height=height)
+
+        case "right":
+            if j == grid_max_j:
+                return 0
+
+            next_tree = tree_grid[i][j+1]
+            if next_tree >= height:
+                return 1
+            else:
+                return 1 + get_tree_viewing_distance(i, j+1, grid_max_i, grid_max_j, tree_grid, direction, height=height)
+
+
+def get_tree_scenic_score(i, j, grid_max_i, grid_max_j, tree_grid):
+    return get_tree_viewing_distance(i, j, grid_max_i, grid_max_j, tree_grid, "up") * get_tree_viewing_distance(i, j, grid_max_i, grid_max_j, tree_grid, "down") * get_tree_viewing_distance(i, j, grid_max_i, grid_max_j, tree_grid, "left") * get_tree_viewing_distance(i, j, grid_max_i, grid_max_j, tree_grid, "right")
+
+
 tree_grid = []
 for i, line in enumerate(lines):
     trees = list(line.strip())
     tree_grid.append(trees)
 
-print(tree_grid)
 visible_sum = 0
 grid_max_i = len(tree_grid) - 1
 grid_max_j = len(tree_grid[0]) - 1
@@ -62,5 +110,15 @@ for i, line in enumerate(tree_grid):
         if is_tree_visible(i, j, grid_max_i, grid_max_j, tree_grid, "up") or is_tree_visible(i, j, grid_max_i, grid_max_j, tree_grid, "down") or is_tree_visible(i, j, grid_max_i, grid_max_j, tree_grid, "left") or is_tree_visible(i, j, grid_max_i, grid_max_j, tree_grid, "right"):
             visible_sum += 1
 
-print(visible_sum)
+max_scenic_score = 0
+for i, line in enumerate(tree_grid):
+    for j, tree in enumerate(line):
+        score = get_tree_scenic_score(i, j, grid_max_i, grid_max_j, tree_grid)
+        if score > max_scenic_score:
+            max_scenic_score = score
 
+print("Part 1:")
+print(visible_sum)
+print()
+print("Part 2:")
+print(max_scenic_score)
